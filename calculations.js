@@ -1,3 +1,5 @@
+var transformation_list=[[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]];
+
 function transform() {
 
     var result = generate_matrix("web");
@@ -211,40 +213,36 @@ function validate(item) {
     if (item.value > Number(item.max)) {item.value = Number(item.max);}
 }
 
-function resetRotation() {
-    document.getElementById('x_rotation').value=0;
-    document.getElementById('y_rotation').value=0;
-    document.getElementById('z_rotation').value=0;
-    transform();
-    document.getElementById('x_rot_val').innerHTML='0°';
-    document.getElementById('y_rot_val').innerHTML='0°';
-    document.getElementById('z_rot_val').innerHTML='0°';
-}
-function resetShear() {
-    document.getElementById('x_shear').value=0;
-    document.getElementById('y_shear').value=0;
-    document.getElementById('z_shear').value=0;
-    document.getElementById('x_shear_2').value=0;
-    document.getElementById('y_shear_2').value=0;
-    document.getElementById('z_shear_2').value=0;
+function resetRotation(element) {
+    var sliders = element.getElementsByClassName('slider');
+    var labels = element.getElementsByClassName('rot_label');
+    for (i=0;i<sliders.length;i++) {
+        sliders[i].value = 0;
+        labels[i] = "0°";
+    }
     transform();
 }
-function rotationStep(val) {
-    document.getElementById('x_rotation').step = val;
-    document.getElementById('y_rotation').step = val;
-    document.getElementById('z_rotation').step = val;
+
+function resetShear(element) {
+    var sliders = element.getElementsByClassName('slider');
+    for (i=0;i<sliders.length;i++) {
+        sliders[i].value = 0;
+    }
+    transform();
 }
 
 function resetScale() {
-    document.getElementById('x_scale').value=1;
-    document.getElementById('y_scale').value=1;
-    document.getElementById('z_scale').value=1;
+    var cells = element.getElementsByClassName('scalingValues');
+    for (i=0;i<cells.length;i++) {
+        cells[i].value = 1;
+    }
     transform();
 }
 function resetTranslation() {
-    document.getElementById('x_translate').value=0;
-    document.getElementById('y_translate').value=0;
-    document.getElementById('z_translate').value=0;
+    var cells = element.getElementsByClassName('translationValues');
+    for (i=0;i<cells.length;i++) {
+        cells[i].value = 1;
+    }
     transform();
 }
 function center() {
@@ -258,4 +256,38 @@ function copyToClipboard() {
   copyText.select();
   copyText.setSelectionRange(0, 99999); // For mobile devices
   navigator.clipboard.writeText(copyText.value);
-} 
+}
+//Section added for Patch 1
+function addRotation() {
+    var newRot = document.createElement('div');
+    newRot.innerHTML = "<div class=\"rotationContainer\"> <p>Rotation Parameters</p> <button class=\"remove_button\" onclick=\"this.parentElement.remove()\">Remove</button> <div class=\"slidecontainer\">   <input type=\"range\" min=\"-180\" max=\"180\" step=\"5\" value=\"0\" class=\"slider x_rot\" onchange=\"transform();update_rot_parameters(this.parentElement)\" /><label class=\"rot_label\" for=\"x_rot\">0°</label> </div> <div class=\"slidecontainer\">   <input type=\"range\" min=\"-180\" max=\"180\" step=\"5\" value=\"0\" class=\"slider y_rot\" onchange=\"transform();update_rot_parameters(this.parentElement)\" /><label class=\"rot_label\" for=\"y_rot\">0°</label> </div> <div class=\"slidecontainer\">   <input type=\"range\" min=\"-180\" max=\"180\" step=\"5\" value=\"0\" class=\"slider z_rot\" onchange=\"transform();update_rot_parameters(this.parentElement)\" /><label class=\"rot_label\" for=\"z_rot\">0°</label> </div>   <span>Step: </span>   <input type=\"number\" min=\"0\" step=\"1\" max=\"10\" value=\"5\" class=\"rot_step\" onchange=\"update_rot_parameters(this.parentElement)\" />   <br />   <button onclick=\"resetRotation(this.parentElement);\">Reset</button> </div>";
+    document.getElementById('transformationContainer').appendChild(newRot);
+}
+
+function addShearing() {
+    var newShear = document.createElement('div');
+    newShear.innerHTML = "<div class=\"shear_transformation\"><p>Shearing Parameters</p><button class=\"remove_button\" onclick=\"this.parentElement.remove()\">Remove</button><div class=\"slidecontainer\">  <input type=\"range\" onchange=\"transform();\" min=\"-2\" max=\"2\" step=\"0.1\" value=\"0\" class=\"slider x_shear\" />  <input type=\"range\" onchange=\"transform();\" min=\"-2\" max=\"2\" step=\"0.1\" value=\"0\" class=\"slider x_shear_2\" /></div><div class=\"slidecontainer\">  <input type=\"range\" onchange=\"transform();\" min=\"-2\" max=\"2\" step=\"0.1\" value=\"0\" class=\"slider y_shear\" />  <input type=\"range\" onchange=\"transform();\" min=\"-2\" max=\"2\" step=\"0.1\" value=\"0\" class=\"slider y_shear_2\" /></div><div class=\"slidecontainer\">  <input type=\"range\" onchange=\"transform();\" min=\"-2\" max=\"2\" step=\"0.1\" value=\"0\" class=\"slider z_shear\" />  <input type=\"range\" onchange=\"transform();\" min=\"-2\" max=\"2\" step=\"0.1\" value=\"0\" class=\"slider z_shear_2\" /></div>  <br />  <button onclick=\"resetShear(this.parentElement)\">Reset</button></div>";
+    document.getElementById('transformationContainer').appendChild(newShear);
+}
+
+function addScaling() {
+    var newScale = document.createElement('div');
+    newScale.innerHTML = "<div class=\"scaleContainer\">  <p>Scaling Parameters</p>  <button class=\"remove_button\" onclick=\"this.parentElement.remove()\">Remove</button>  <input type=\"number\" step=\"0.1\" value=\"1\" placeholder=\"1\" min=\"-100\" max=\"100\" onchange=\"validate(this);transform();\" class=\"scalingValue x_scale\" />  <input type=\"number\" step=\"0.1\" value=\"1\" placeholder=\"1\" min=\"-100\" max=\"100\" onchange=\"validate(this);transform();\" class=\"scalingValue y_scale\" />  <input type=\"number\" step=\"0.1\" value=\"1\" placeholder=\"1\" min=\"-100\" max=\"100\" onchange=\"validate(this);transform();\" class=\"scalingValue z_scale\" />  <br />  <button onclick=\"resetScale(this.parentElement)\">Reset</button></div>";
+    document.getElementById('transformationContainer').appendChild(newScale);
+}
+
+function addTranslate() {
+    var newTranslate = document.createElement('div');
+    newTranslate.innerHTML = "  <div class=\"translationContainer\">    <p>Translation Parameters</p>    <button class=\"remove_button\">Remove</button>    <input type=\"number\" step=\"0.1\" value=\"0\" placeholder=\"0\" min=\"-250\" max=\"250\" onchange=\"validate(this);transform();\" class=\"translationValue x_translate\" />    <input type=\"number\" step=\"0.1\" value=\"0\" placeholder=\"0\" min=\"-250\" max=\"250\" onchange=\"validate(this);transform();\" class=\"translationValue y_translate\" />    <input type=\"number\" step=\"0.1\" value=\"0\" placeholder=\"0\" min=\"-250\" max=\"250\" onchange=\"validate(this);transform();\" class=\"translationValue z_translate\" />    <br />    <button onclick=\"resetTranslation(this.parentElement)\">Reset</button>  </div>";
+    document.getElementById('transformationContainer').appendChild(newTranslate);
+}
+
+function update_rot_parameters(element) {
+    var rot_step = element.getElementsByClassName("rot_step")[0];
+    var sliders = element.getElementsByClassName("slider");
+    var labels = element.getElementsByClassName("rot_label");
+    for (i=0;i < sliders.length;i++) {
+        sliders[i].step = rot_step;
+        labels[i].innerHTML = sliders[i].value + "°";
+    }
+}
