@@ -196,6 +196,10 @@ transform: rotateY(0deg) translateZ(100px);
   background: rgba(0,255,0,0.5);
   transform: rotateY(180deg) translateZ(100px);
   }
+.cube__face--text   {
+  background: rgba(0,255,0,0.5);
+  transform: rotateY(0deg) translateZ(100px);
+  }
 .cube__face--left   {
   background: rgba(255,255,0,0.5);
   transform: rotateY(-90deg) translateZ(100px);
