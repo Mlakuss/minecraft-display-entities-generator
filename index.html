@@ -36,59 +36,11 @@
     <label for="text_json" class="text_display switch">Text (JSON format):</label><input class="text_display switch" id="text_json" onchange="generate_command();" type="text" placeholder='{"text":"Example","color":"red"}' value='{"text":"Example","color":"red"}' />
   </div>
 <div>
-<div class="rotationContainer">
-<p>Rotation Parameters</p>
-<div class="slidecontainer">
-  <input type="range" min="-180" max="180" step="5" value="0" class="slider" onchange="transform();document.getElementById('x_rot_val').innerHTML=this.value + '°'" id="x_rotation" /><label id="x_rot_val" for="x_rotation">0°</label>
-</div>
-<div class="slidecontainer">
-  <input type="range" min="-180" max="180" step="5" value="0" class="slider" onchange="transform();document.getElementById('y_rot_val').innerHTML=this.value + '°'" id="y_rotation" /><label id="y_rot_val" for="y_rotation">0°</label>
-</div>
-<div class="slidecontainer">
-  <input type="range" min="-180" max="180" step="5" value="0" class="slider" onchange="transform();document.getElementById('z_rot_val').innerHTML=this.value + '°'" id="z_rotation" /><label id="z_rot_val" for="z_rotation">0°</label>
-</div>
-  <span>Step: </span>
-  <input type="number" min="0" step="1" max="10" value="5" class="smallInput" onchange="rotationStep(this.value)" />
-  <br />
-  <button onclick="resetRotation()">Reset</button>
-</div>
+  <div id="transformationContainer">
+    <h3>Transformation</h3>
 
-<div class="shearContainer">
-<p>Shearing Parameters</p>
-<div class="slidecontainer">
-  <input type="range" onchange="transform();" min="-2" max="2" step="0.1" value="0" class="slider" id="x_shear" />
-  <input type="range" onchange="transform();" min="-2" max="2" step="0.1" value="0" class="slider" id="x_shear_2" />
-</div>
-<div class="slidecontainer">
-  <input type="range" onchange="transform();" min="-2" max="2" step="0.1" value="0" class="slider" id="y_shear" />
-  <input type="range" onchange="transform();" min="-2" max="2" step="0.1" value="0" class="slider" id="y_shear_2" />
-</div>
-<div class="slidecontainer">
-  <input type="range" onchange="transform();" min="-2" max="2" step="0.1" value="0" class="slider" id="z_shear" />
-  <input type="range" onchange="transform();" min="-2" max="2" step="0.1" value="0" class="slider" id="z_shear_2" />
-</div>
-  <br />
-  <button onclick="resetShear()">Reset</button>
-</div>
-
-<div class="scaleContainer">
-  <p>Scaling Parameters</p>
-  <input type="number" step="0.1" value="1" placeholder="1" min="-100" max="100" onchange="validate(this);transform();" class="scalingValue" id="x_scale" /><br/>
-  <input type="number" step="0.1" value="1" placeholder="1" min="-100" max="100" onchange="validate(this);transform();" class="scalingValue" id="y_scale" /><br/>
-  <input type="number" step="0.1" value="1" placeholder="1" min="-100" max="100" onchange="validate(this);transform();" class="scalingValue" id="z_scale" />
-  <br />
-  <button onclick="resetScale()">Reset</button>
-</div>
-
-  <div class="translationContainer">
-    <p>Translation Parameters</p>
-    <input type="number" step="0.1" value="0" placeholder="0" min="-250" max="250" onchange="validate(this);transform();" class="translationValue" id="x_translate" /><br/>
-    <input type="number" step="0.1" value="0" placeholder="0" min="-250" max="250" onchange="validate(this);transform();" class="translationValue" id="y_translate" /><br/>
-    <input type="number" step="0.1" value="0" placeholder="0" min="-250" max="250" onchange="validate(this);transform();" class="translationValue" id="z_translate" />
-    <br />
-    <button onclick="resetTranslation()">Reset</button>
+    
   </div>
-  
   <div class="animationContainer">
     <div class="toggle"><h3>Display Options</h3></div>
     <p>Animation Duration (seconds):</p>
