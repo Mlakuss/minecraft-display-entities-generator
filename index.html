@@ -31,14 +31,19 @@
       <option value="execute_summon">/execute summon</option>
     </select>
     <label for="block_id" class="block_display switch">Block ID:</label><input class="block_display switch" id="block_id" onchange="generate_command();" type="text" placeholder="minecraft:stone" value="minecraft:stone" />
+    <label for="block_properties" class="block_display switch">Properties:</label><input class="block_display switch" id="block_id" onchange="generate_command();" type="text" placeholder="facing:\"up\"" value="" />
     <label for="item_id" class="item_display switch">Item ID:</label><input class="item_display switch" id="item_id" type="text" onchange="generate_command();" placeholder="minecraft:diamond" value="minecraft:diamond" />
     <label for="text_raw" class="text_display switch">Text (Raw):</label><input class="text_display switch" type="text" onchange="raw_to_json(this.value);generate_command();" placeholder="Example" value="Example" />
     <label for="text_json" class="text_display switch">Text (JSON format):</label><input class="text_display switch" id="text_json" onchange="generate_command();" type="text" placeholder='{"text":"Example","color":"red"}' value='{"text":"Example","color":"red"}' />
+    <label for="tags">Tags:</label><input id="tag_list" type="text" onchange="generate_command();" placeholder="Tag1, Tag2" value="" />
   </div>
 <div>
   <div id="transformationContainer">
     <h3>Transformation</h3>
-
+    <button class="add_operation" onclick="addTranslate();">Add Translation</button>
+    <button class="add_operation" onclick="addScaling();">Add Scaling</button>
+    <button class="add_operation" onclick="addRotation();">Add Rotation</button>
+    <button class="add_operation" onclick="addShearing();">Add Shearing</button>
     
   </div>
   <div class="animationContainer">
