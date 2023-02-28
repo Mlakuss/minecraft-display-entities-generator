@@ -22,6 +22,7 @@ function generate_command() {
     var anim_duration = document.getElementById("anim_duration").value;
     anim_duration = Math.trunc(anim_duration * 20);
     var shadow_radius = document.getElementById("shadow_radius").value;
+    var tag_list = document.getElementById("tag_list").value;
     var shadow_strength = document.getElementById("shadow_strength").value;
     var view_range = document.getElementById("view_range").value;
     if (document.getElementById("override_glow").checked) {var glow = parseInt(document.getElementById("glow_color").value.substring(1),16);} else {var glow = -1;}
@@ -100,6 +101,10 @@ function generate_command() {
         if (sky_light == -1) {sky_light = 0;}
         if (block_light == -1) {block_light = 0;}
         command = command + ",brightness:{sky:"+sky_light+",block:"+block_light+"}"
+    }
+    if (tag_list) {
+        tag_list = '"' + tag_list.replace(',','","') + '"';
+        command = command + ", Tags:[" + tag_list + "]";
     }
     document.getElementById("commandOutput").value = command +"}";
 }
